@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./public/main.css">
+    <title>Document</title>
+    <!-- <script type="importmap">
+        {
+          "imports": {
+            "three": "https://unpkg.com/three@v0.149.0/build/three.module.js",
+            "three/addons/": "https://unpkg.com/three@v0.149.0/examples/jsm/",
+            "dat": "https://unpkg.com/dat.gui@0.7.7/build/dat.gui.module.js"
+          }
+        }
+      </script> -->
+    <!-- <script src="three.min.js"></script> -->
+
+</head>
+
+<body>
+    <div id="root-window">
+        <div id="game-window">
+            <div id="ui-toolbar">
+                <button class="ui-button selected" id="button-bulldoze">
+                    BULLDOZE
+                </button>
+                <button class="ui-button" id="button-residential">
+                    RESIDENTIAL
+                </button>
+                <button class="ui-button" id="button-commercial">
+                    COMMERCIAL
+                </button>
+                <button class="ui-button" id="button-industrial">
+                    INDUSTRIAL
+                </button>
+                <button class="ui-button" id="button-road">
+                    ROAD
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="index.js">
+    </script>
+</body>
+
+</html>
