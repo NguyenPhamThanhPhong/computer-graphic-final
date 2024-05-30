@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { camera_constants } from './constants';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { camera_constants } from './constants.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 let cameraX = camera_constants.x;
 let cameraY = camera_constants.y;

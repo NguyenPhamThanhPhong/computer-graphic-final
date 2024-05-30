@@ -17,6 +17,9 @@ window.onload = () => {
     //     event.target.classList.add('active');
     // }
 }
+window.onclose = () => {
+    window.scene.stop();
+}
 
 function main(){
     window.menu = new Menu();

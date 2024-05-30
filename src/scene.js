@@ -1,11 +1,11 @@
 import * as THREE from 'three';
-import { createCamera, createControls } from './camera';
-import { createRaycaster } from './raycaster';
-import { createAxis } from './helper-objects/axis';
-import { createPlane } from './game-objects/plane-ground';
-import { createCity } from './city'
-import { createLights } from './lights'
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { createCamera, createControls } from './camera.js';
+import { createRaycaster } from './raycaster.js';
+import { createAxis } from './helper-objects/axis.js';
+import { createPlane } from './game-objects/plane-ground.js';
+import { createCity } from './city.js'
+import { createLights } from './lights.js'
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 const CLEAR_COLOR = 'white'
 
@@ -57,9 +57,18 @@ export function createScene() {
     scene.add(createShadowReceiveCube());
 
     const loader = new GLTFLoader();
-    let url = new URL('../public/models/gas-station/scene.gltf', import.meta.url);
     loader.load('../public/models/gas-station/scene.gltf', function (gltf) {
         const model = gltf.scene
+        model.scale.set(0.3, 0.3, 0.3)
+        model.position.set(5, 2, 5)
+        
+        model.traverse(function(node){
+            if (node.isMesh) {
+                node.castShadow = true;
+                // node.receiveShadow = true;
+            }
+        });
+
         console.log(gltf)
         scene.add(model)
 
@@ -67,10 +76,10 @@ export function createScene() {
         console.error(error)
     })
     
-    // let city = createCity(30)
-    // city.initializeCity(scene)
+    let city = createCity(30)
+    city.initializeCity(scene)
 
-    createLights(scene)
+    const { updateSunPosition } = createLights(scene);
     const raycaster = createRaycaster(scene, camera)
 
     const controls = createControls(camera, renderer);
@@ -85,6 +94,7 @@ export function createScene() {
 
     function draw() {
         renderer.render(scene, camera)
+        updateSunPosition()
         controls.update();
     }
 
@@ -97,14 +107,14 @@ export function createScene() {
     }
 
     function intervalUpdate() {
-        // city.stateUpdate()
-        // city.renderUpdate(scene)
+        city.stateUpdate()
+        city.renderUpdate(scene)
     }
 
 
 
     return {
-        // city,
+        city,
         intervalUpdate,
         draw,
         start,

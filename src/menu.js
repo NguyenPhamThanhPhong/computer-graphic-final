@@ -31,7 +31,7 @@ const areaPointsCalculator = {
 
 class Menu {
     constructor() {
-        this.items = ['bulldoze', 'residential', 'commercial', 'industrial', 'road'];
+        this.items = ['cursor','bulldoze', 'residential', 'commercial', 'industrial', 'road'];
         this.selectedItem = this.items[0];
     }
 
@@ -45,6 +45,7 @@ class Menu {
     }
 
     createMenuItemEvents() {
+        const cursor = document.getElementById('button-cursor');
         const bulldoze = document.getElementById('button-bulldoze');
         const residential = document.getElementById('button-residential');
         const commercial = document.getElementById('button-commercial');
@@ -62,6 +63,7 @@ class Menu {
             selectedControl.classList.add('selected');
             this.selectedItem = toolId;
         }
+        cursor.addEventListener('mousedown', (event) => handleMenuItem(event, 'cursor'));
         bulldoze.addEventListener('mousedown', (event) => handleMenuItem(event, 'bulldoze'));
         residential.addEventListener('mousedown', (event) => handleMenuItem(event, 'residential'));
         commercial.addEventListener('mousedown', (event) => handleMenuItem(event, 'commercial'));

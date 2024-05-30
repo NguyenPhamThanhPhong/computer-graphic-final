@@ -1,8 +1,11 @@
-import building0 from '../public/assets//textures/building0.jpg'
-import building1 from '../public/assets//textures/building1.png'
-import sun from '../public/assets/textures/sun.png'
-import comercial3 from '../public/assets/textures/comercial3.png'
-import comercial1 from '../public/assets/textures/comercial1.png'
+
+
+
+const building0 = '../public/assets//textures/building1.png'
+const building1 = '../public/assets//textures/building1.png'
+const sun = '../public/assets/textures/sun.png'
+const comercial3 = '../public/assets/textures/comercial3.png'
+const comercial1 = '../public/assets/textures/comercial1.png'
 
 const residential_model = sun
 

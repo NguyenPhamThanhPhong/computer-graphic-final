@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import building0 from '../public/assets/textures/building0.jpg'
-import textures from './textures';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { mod } from 'three/examples/jsm/nodes/Nodes.js';
+// import building0 from '../public/assets/textures/building0.jpg'
+import textures from './textures.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+// import { mod } from 'three/addons/nodes/Nodes.js';
 
 const textureLoader = new THREE.TextureLoader()
 
@@ -12,7 +12,7 @@ let buildingStateTypes = {
     state_1: 'building-1',
     state_2: 'building-2',
     state_3: 'building-3',
-    state_4: 'building-4',
+    state_no_update: 'building-4',
     residential: 'residential',
     comercial: 'comercial',
     industrial: 'industrial',
@@ -40,7 +40,7 @@ let buildingStates = {
         buildingId: 'building-0',
         terrainId: 'grass',
     },
-    [buildingStateTypes.state_4]: {
+    [buildingStateTypes.state_no_update]: {
         buildingId: 'building-0',
         terrainId: 'grass',
         stateMessage: 'building at max level'

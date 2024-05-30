@@ -1,6 +1,6 @@
 import * as THREE from 'three';
-import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js';
-import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js';
+import { FontLoader } from 'three/addons/loaders/FontLoader.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 const grid_size = 100
 function createAxis(scene) {
     const axesHelper = new THREE.AxesHelper(50);
@@ -25,15 +25,19 @@ function createAxis(scene) {
             // Position the textMesh according to the axis
             switch (axisName) {
                 case 'x':
-                    textMesh.position.set(15, 0, 0);
+                    textMesh.position.set(0, 0, 0);
+                    textMesh.rotateZ(Math.PI / 2);
                     break;
                 case 'y':
-                    textMesh.position.set(0, 15, 0);
+                    textMesh.position.set(0, 50, 0);
+                    textMesh.rotateX(Math.PI / 2);
                     break;
                 case 'z':
-                    textMesh.position.set(0, 0, 15);
+                    textMesh.position.set(0, 0, 0);
+                    textMesh.rotateY(Math.PI / 2);
                     break;
             }
+            // textMesh.rotateX(Math.PI / 2);
 
             scene.add(textMesh);
         });

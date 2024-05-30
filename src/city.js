@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { createAssetInstance, buildingStateTypes } from './assets';
+import { createAssetInstance, buildingStateTypes } from './assets.js';
 
 class BuildingObject {
     constructor(x, y) {
@@ -8,8 +8,6 @@ class BuildingObject {
         this.areaPoints = [{x,y}]
 
         this.isRemoved = false
-        if (Math.random() > 0.9)
-            this.building = buildingStateTypes.state_0
     }
     static initializeNewBuilding = (x, y, state) => {
         let mybuild = new BuildingObject(x, y)
@@ -29,7 +27,7 @@ class BuildingObject {
                 this.building = buildingStateTypes.state_3
                 break;
             case buildingStateTypes.state_3:
-                this.building = buildingStateTypes.state_4
+                this.building = buildingStateTypes.state_no_update
                 break;
             default:
                 return;
@@ -51,8 +49,7 @@ function createCity(size) {
             data.push(columns)
         }
         buildingCubes = Array.from({ length: size }, () => Array.from({ length: size }));
-        console.log(data)
-        console.log(buildingCubes)
+        // console.log(buildingCubes)
     }
 
     function stateUpdate() {
@@ -79,7 +76,7 @@ function createCity(size) {
                     continue
                 }
                 if (buildingStateTypes.includes(tile.building)
-                    && tile.building !== buildingStateTypes.state_4) {
+                    && tile.building !== buildingStateTypes.state_no_update) {
                     const cube = createAssetInstance(tile.building, x, y)
                     if (cube === undefined) continue
                     if (buildingCubes[x][y] !== undefined) {

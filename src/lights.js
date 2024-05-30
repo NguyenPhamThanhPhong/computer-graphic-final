@@ -1,16 +1,18 @@
 import * as THREE from 'three';
-import sunTexture from '../public/assets/textures/sun.png';
+import textures from './textures.js';
+// import sunTexture from '../public/assets/textures/sun.png';
 
 
 function createLights(scene) {
+    const rotatePos = [10, 0, 10]
 
 
         // Create a mesh to represent the sun
     const sunGeometry = new THREE.SphereGeometry( 1, 32, 16 ); 
-    const sunMaterial = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(sunTexture)  } );
+    const sunMaterial = new THREE.MeshBasicMaterial( { map: new THREE.TextureLoader().load(textures.sun)  } );
     const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial);
 
-    const sun = new THREE.DirectionalLight(0xffffff, 1);
+    const sun = new THREE.DirectionalLight(0xffffff, 2);
     sun.position.set(20, 20, 20);
     sun.castShadow = true;
     sun.shadow.camera.left = -20;
@@ -21,24 +23,25 @@ function createLights(scene) {
     sun.shadow.mapSize.height = 1024;
     sun.shadow.camera.near = 0.5;
     sun.shadow.camera.far = 50;
-    sun.target.position.set(10, 0, 10);
     sun.add(sunMesh)
-    scene.add(sun);
+    // scene.add(sun);
+
+
+    const virtualCenter = new THREE.Object3D();
+    sun.target.position.set(...rotatePos);
+    virtualCenter.position.set(...rotatePos);
+    virtualCenter.add(sun);
+    scene.add(virtualCenter);
     scene.add(sun.target);
+
     const helper = new THREE.CameraHelper(sun.shadow.camera);
     scene.add(helper);
 
 
-
-
-
-    
-    
-    // ambientLight.add(sunMesh);
-    // scene.add(ambientLight);
-
-
-    // Rotate the sun to face the light direction
+    function updateSunPosition() {
+        // virtualCenter.rotateZ(0.005);
+    }
+    return { updateSunPosition };
 }
 
 export { createLights };
