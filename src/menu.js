@@ -7,6 +7,9 @@ const areaPointsCalculator = {
     'residential': (x, y) => {
         return [{ x: x, y: y }];
     },
+    'road': (x, y) => {
+        return [{ x: x, y: y }];
+    },
     'commercial': (x, y) => {
         const point1 = { x: x, y: y };
         const point2 = { x: x + 1, y: y };
@@ -16,11 +19,11 @@ const areaPointsCalculator = {
     },
     'industrial': (x, y) => {
         //totally 9 points around the center 3x3
-        const point1 = { x: x - 1, y: y - 1 };
+        const point1 = { x: x, y: y };
+        const point5 = { x: x - 1, y: y - 1 };
         const point2 = { x: x, y: y - 1 };
         const point3 = { x: x + 1, y: y - 1 };
         const point4 = { x: x - 1, y: y };
-        const point5 = { x: x, y: y };
         const point6 = { x: x + 1, y: y };
         const point7 = { x: x - 1, y: y + 1 };
         const point8 = { x: x, y: y + 1 };
@@ -36,6 +39,7 @@ class Menu {
     }
 
     getSelectedAreaPoints(x, y) {
+        console.log(`selectedItem asdfasdfasd:${this.selectedItem}`)
         if (this.selectedItem === 'bulldoze') {
             return [{ x, y }];
         }
@@ -69,7 +73,6 @@ class Menu {
         commercial.addEventListener('mousedown', (event) => handleMenuItem(event, 'commercial'));
         industrial.addEventListener('mousedown', (event) => handleMenuItem(event, 'industrial'));
         road.addEventListener('mousedown', (event) => handleMenuItem(event, 'road'));
-
     }
 }
 

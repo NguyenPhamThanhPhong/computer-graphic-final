@@ -89,13 +89,24 @@ function createCity(size) {
         }
     }
 
-    function addBuilding(x, y) {
+    function addBuilding(pointArgs) {
+        console.log('in add building');
+        console.log(pointArgs)
+        const x = pointArgs[0].x
+        const y = pointArgs[0].y
         let building = new BuildingObject(x, y)
         building.building = buildingStateTypes.state_0
         if (window.menu?.selectedItem) {
             building.building = window.menu.selectedItem
         }
+        if(pointArgs.length>1){
+            for (let i = 1; i < pointArgs.length; i++) {
+                const point = pointArgs[i]
+                data[point.x][point.y] = window.menu.selectedItem
+            }
+        }
         data[x][y] = building;
+        console.log(data[x][y])
     }
 
     function removeBuilding(x, y) {

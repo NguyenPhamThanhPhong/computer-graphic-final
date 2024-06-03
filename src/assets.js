@@ -152,8 +152,6 @@ const assets = {
         let model;
         ModelLoader.load(textures.residential_model, (gltf) => {
             model = gltf.scene;
-            console.log(model)
-
             model.scale.set(1,1,1);
             model.position.set(x, height / 2, y);
             model.userData = buildingStates[buildingStateTypes.comercial]
@@ -186,7 +184,6 @@ const assets = {
     'bulldoze': (x, y) => {
         return undefined
     }
-
 }
 
 function createAssetInstance(assetId, x, y) {

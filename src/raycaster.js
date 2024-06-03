@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { buildingStateTypes,createAssetInstance } from './assets.js';
+import { buildingStateTypes, createAssetInstance } from './assets.js';
 
 function createRaycaster(scene, camera) {
     const raycaster = new THREE.Raycaster();
@@ -16,37 +16,39 @@ function createRaycaster(scene, camera) {
 
         // If there are intersections, fade the first intersected object
         if (intersects.length > 0) {
-            if(selectedObject){
+            if (selectedObject) {
                 selectedObject.object.material.emissive?.setHex(0);
             }
             selectedObject = intersects.find((intersect) => intersect.object.userData.buildingId)
 
             try {
-                let selectedBuildingId = selectedObject?.object.userData.buildingId
-                // add building selected to menu
-                if (selectedObject && selectedBuildingId) {
-                    let x = selectedObject.object.position.x
-                    let z = selectedObject.object.position.z
+                
+            }
+            catch (e) {
+                console.error(`self error:${e}`)
+            }
+            let selectedBuildingId = selectedObject?.object.userData.buildingId
+            // add building selected to menu
+            if (selectedObject && selectedBuildingId) {
+                let x = selectedObject.object.position.x
+                let z = selectedObject.object.position.z
 
-                    if( window.menu.selectedItem !== buildingStateTypes.bulldoze &&
-                        selectedBuildingId===buildingStateTypes.ground){
-                        // console.log(selectedObject.object.position)
-
-                        window.scene.city.addBuilding(x, z)
-                    }
-                    else if ( window.menu.selectedItem === buildingStateTypes.bulldoze &&
-                        selectedBuildingId !== buildingStateTypes.ground)
-                    {
-                        window.scene.city.removeBuilding(x, z)
+                if (window.menu.selectedItem !== buildingStateTypes.bulldoze &&
+                    selectedBuildingId === buildingStateTypes.ground) {
+                    // console.log(selectedObject.object.position)
+                    if (selectedBuildingId === buildingStateTypes.ground) {
+                        let pointArgs = window.menu.getSelectedAreaPoints(x, z)
+                        if(pointArgs)
+                            window.scene.city.addBuilding(pointArgs)
                     }
                 }
-                if (selectedObject) {
-                    selectedObject.object.material.emissive?.setHex(0xff0000);
+                else if (window.menu.selectedItem === buildingStateTypes.bulldoze &&
+                    selectedBuildingId !== buildingStateTypes.ground) {
+                    window.scene.city.removeBuilding(x, z)
                 }
             }
-            catch(e)
-            {
-                console.error(`self error:${e}`)
+            if (selectedObject) {
+                selectedObject.object.material.emissive?.setHex(0xff0000);
             }
         }
     }
