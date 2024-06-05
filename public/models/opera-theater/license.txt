@@ -1,0 +1,11 @@
+Model Information:
+* title:	Theatr Of Opyera Belarus
+* source:	https://sketchfab.com/3d-models/theatr-of-opyera-belarus-2144f52786974124877e6a57853703c8
+* author:	Karpulya (https://sketchfab.com/Karpulya)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Theatr Of Opyera Belarus" (https://sketchfab.com/3d-models/theatr-of-opyera-belarus-2144f52786974124877e6a57853703c8) by Karpulya (https://sketchfab.com/Karpulya) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

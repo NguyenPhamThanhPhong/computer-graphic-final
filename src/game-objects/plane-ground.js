@@ -16,10 +16,10 @@ function createPlane(scene) {
             scene.add(cube);
         }
     }
-    var testBox = new THREE.BoxGeometry(1, 1, 1);
-    var testMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
-    var testCube = new THREE.Mesh(testBox, testMaterial);
-    testCube.position.set(5, 5, 2);
-    scene.add(testCube);
+    // var testBox = new THREE.BoxGeometry(1, 1, 1);
+    // var testMaterial = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
+    // var testCube = new THREE.Mesh(testBox, testMaterial);
+    // testCube.position.set(5, 5, 2);
+    // scene.add(testCube);
 }
 export { createPlane };

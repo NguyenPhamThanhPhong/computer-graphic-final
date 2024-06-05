@@ -34,8 +34,10 @@ const areaPointsCalculator = {
 
 class Menu {
     constructor() {
-        this.items = ['cursor','bulldoze', 'residential', 'commercial', 'industrial', 'road'];
-        this.selectedItem = this.items[0];
+        // this.items = ['cursor','bulldoze', 'residential', 'commercial',
+        //  'industrial', 'road','office','park',
+        //  'school','hospital','super market'];
+        this.selectedItem = 'cursor'
     }
 
     getSelectedAreaPoints(x, y) {
@@ -55,6 +57,13 @@ class Menu {
         const commercial = document.getElementById('button-commercial');
         const industrial = document.getElementById('button-industrial');
         const road = document.getElementById('button-road');
+        const office = document.getElementById('button-office');
+        const park = document.getElementById('button-park');
+        const school = document.getElementById('button-school');
+        const hospital = document.getElementById('button-hospital');
+        const superMarket = document.getElementById('button-super-market');
+        const gasStation = document.getElementById('button-gas-station');
+        const windmill = document.getElementById('button-windmill');
 
         let selectedControl = bulldoze;
 
@@ -73,6 +82,13 @@ class Menu {
         commercial.addEventListener('mousedown', (event) => handleMenuItem(event, 'commercial'));
         industrial.addEventListener('mousedown', (event) => handleMenuItem(event, 'industrial'));
         road.addEventListener('mousedown', (event) => handleMenuItem(event, 'road'));
+        office.addEventListener('mousedown', (event) => handleMenuItem(event, 'office'));
+        park.addEventListener('mousedown', (event) => handleMenuItem(event, 'park'));
+        school.addEventListener('mousedown', (event) => handleMenuItem(event, 'school'));
+        hospital.addEventListener('mousedown', (event) => handleMenuItem(event, 'hospital'));
+        superMarket.addEventListener('mousedown', (event) => handleMenuItem(event, 'super-market'));
+        gasStation.addEventListener('mousedown', (event) => handleMenuItem(event, 'gas-station'));
+        windmill.addEventListener('mousedown', (event) => handleMenuItem(event, 'windmill'));
     }
 }
 

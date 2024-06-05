@@ -1,12 +1,11 @@
 import * as THREE from 'three';
-import { createAssetInstance, buildingStateTypes } from './assets.js';
+import { createAssetInstance, buildingTypes } from './assets.js';
 
 class BuildingObject {
     constructor(x, y) {
         this.x = x
         this.y = y
-        this.areaPoints = [{x,y}]
-
+        this.areaPoints = [{ x, y }]
         this.isRemoved = false
     }
     static initializeNewBuilding = (x, y, state) => {
@@ -17,17 +16,20 @@ class BuildingObject {
     update() {
         //check if it's in building state types
         switch (this.building) {
-            case buildingStateTypes.state_0:
-                this.building = buildingStateTypes.state_1
+            case buildingTypes.state_0:
+                this.building = buildingTypes.state_1
                 break;
-            case buildingStateTypes.state_1:
-                this.building = buildingStateTypes.state_2
+            case buildingTypes.state_1:
+                this.building = buildingTypes.state_2
                 break;
-            case buildingStateTypes.state_2:
-                this.building = buildingStateTypes.state_3
+            case buildingTypes.state_2:
+                this.building = buildingTypes.residential
                 break;
-            case buildingStateTypes.state_3:
-                this.building = buildingStateTypes.state_no_update
+            // case buildingTypes.state_3:
+            //     this.building = buildingTypes.state_no_update
+            //     break;
+            case buildingTypes.gas_station:
+                // console.log('gas station')
                 break;
             default:
                 return;
@@ -75,9 +77,22 @@ function createCity(size) {
                     }
                     continue
                 }
-                if (buildingStateTypes.includes(tile.building)
-                    && tile.building !== buildingStateTypes.state_no_update) {
+                if (buildingTypes.includes(tile.building)
+                    && tile.building !== buildingTypes.state_no_update) {
+                    if (buildingCubes[x][y] !== undefined
+                        && buildingCubes[x][y]?.userData !== undefined
+                        && buildingCubes[x][y]?.userData?.buildingId === tile.building
+                    ) 
+                    {
+                        // console.log('buildingCubes[x][y]?.userData:', buildingCubes[x][y]?.userData?.buildingId)
+                        // console.log('tile.building:', tile.building)
+                        // console.log('got skipped');
+                        continue
+                    }
+                    console.log('buildingCubes[x][y]?.userData:', buildingCubes[x][y]?.userData?.buildingId)
+                    console.log('tile.building:', tile.building)
                     const cube = createAssetInstance(tile.building, x, y)
+
                     if (cube === undefined) continue
                     if (buildingCubes[x][y] !== undefined) {
                         scene.remove(buildingCubes[x][y])
@@ -89,24 +104,14 @@ function createCity(size) {
         }
     }
 
-    function addBuilding(pointArgs) {
+    function addBuilding(x, y) {
         console.log('in add building');
-        console.log(pointArgs)
-        const x = pointArgs[0].x
-        const y = pointArgs[0].y
         let building = new BuildingObject(x, y)
-        building.building = buildingStateTypes.state_0
+        building.building = buildingTypes.state_0
         if (window.menu?.selectedItem) {
             building.building = window.menu.selectedItem
         }
-        if(pointArgs.length>1){
-            for (let i = 1; i < pointArgs.length; i++) {
-                const point = pointArgs[i]
-                data[point.x][point.y] = window.menu.selectedItem
-            }
-        }
         data[x][y] = building;
-        console.log(data[x][y])
     }
 
     function removeBuilding(x, y) {

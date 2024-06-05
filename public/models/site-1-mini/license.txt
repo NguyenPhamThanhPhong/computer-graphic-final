@@ -1,0 +1,11 @@
+Model Information:
+* title:	Construction site - Low poly prop set
+* source:	https://sketchfab.com/3d-models/construction-site-low-poly-prop-set-cc261d95224242ab8f287e3a2cdf07cc
+* author:	Daniel Zhabotinsky (https://sketchfab.com/DanielZhabotinsky)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Construction site - Low poly prop set" (https://sketchfab.com/3d-models/construction-site-low-poly-prop-set-cc261d95224242ab8f287e3a2cdf07cc) by Daniel Zhabotinsky (https://sketchfab.com/DanielZhabotinsky) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

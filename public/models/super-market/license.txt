@@ -1,0 +1,11 @@
+Model Information:
+* title:	Supermarket low poly
+* source:	https://sketchfab.com/3d-models/supermarket-low-poly-cf6d380dc7f64b52b4ebd39b9c59c613
+* author:	Qualix_studio (https://sketchfab.com/steam813)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Supermarket low poly" (https://sketchfab.com/3d-models/supermarket-low-poly-cf6d380dc7f64b52b4ebd39b9c59c613) by Qualix_studio (https://sketchfab.com/steam813) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,14 +1,17 @@
 import * as THREE from 'three';
-import { buildingStateTypes, createAssetInstance } from './assets.js';
+import {  buildingTypes, createAssetInstance } from './assets.js';
 
 function createRaycaster(scene, camera) {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
 
     let selectedObject = undefined
+
+    let selectedBuildingInstance = undefined
+
+    
     function onMouseDownSelect() {
 
-        // Update the picking ray with the camera and mouse position
         raycaster.setFromCamera(mouse, camera);
 
         // Calculate objects intersecting the picking ray
@@ -29,21 +32,19 @@ function createRaycaster(scene, camera) {
             }
             let selectedBuildingId = selectedObject?.object.userData.buildingId
             // add building selected to menu
-            if (selectedObject && selectedBuildingId) {
+            if (selectedObject && selectedBuildingId && window.menu.selectedItem!=='cursor') {
                 let x = selectedObject.object.position.x
                 let z = selectedObject.object.position.z
 
-                if (window.menu.selectedItem !== buildingStateTypes.bulldoze &&
-                    selectedBuildingId === buildingStateTypes.ground) {
+                if (window.menu.selectedItem !== buildingTypes.bulldoze &&
+                    selectedBuildingId === buildingTypes.ground) {
                     // console.log(selectedObject.object.position)
-                    if (selectedBuildingId === buildingStateTypes.ground) {
-                        let pointArgs = window.menu.getSelectedAreaPoints(x, z)
-                        if(pointArgs)
-                            window.scene.city.addBuilding(pointArgs)
+                    if (selectedBuildingId === buildingTypes.ground) {
+                        window.scene.city.addBuilding(x,z)
                     }
                 }
-                else if (window.menu.selectedItem === buildingStateTypes.bulldoze &&
-                    selectedBuildingId !== buildingStateTypes.ground) {
+                else if (window.menu.selectedItem === buildingTypes.bulldoze &&
+                    selectedBuildingId !== buildingTypes.ground) {
                     window.scene.city.removeBuilding(x, z)
                 }
             }
@@ -52,11 +53,46 @@ function createRaycaster(scene, camera) {
             }
         }
     }
+    // function onMouseMove(){
+    //     let selectedMenuItem = window.menu.selectedItem
+    //     if(buildingTypes.includes(selectedMenuItem)){
+    //         raycaster.setFromCamera(mouse, camera);
+
+    //         // Calculate objects intersecting the picking ray
+    //         var intersects = raycaster.intersectObjects(scene.children);
+    //         if (intersects.length > 0){
+    //             let hoveredItem = intersects.find((intersect) => intersect.object.userData.buildingId)
+    //             let x = hoveredItem.object.position.x
+    //             let z = hoveredItem.object.position.z
+    //             let selectedBuildingId = hoveredItem?.object.userData.buildingId
+    //             if(selectedBuildingId===buildingTypes.ground){
+    //                 if(selectedBuildingInstance){
+    //                     scene.remove(selectedBuildingInstance)
+    //                 }
+    //                 selectedBuildingInstance = createAssetInstance(selectedMenuItem, x, z)
+    //                 scene.add(selectedBuildingInstance)
+    //             }
+
+    //         }
+    //         else{
+
+    //         }
+    //         // let cube = createAssetInstance(selectedMenuItem, x, z)
+    //         // if (cube === undefined) return
+    //         // if (selectedObject) {
+    //         //     scene.remove(selectedObject.object)
+    //         // }
+    //         // scene.add(cube)
+    //         // selectedObject = {object:cube}
+    //     }
+    // }
+
     return {
         raycaster,
         mouse,
         onMouseDownSelect,
         selectedObject,
+        selectedBuildingInstance
     }
 }
 
