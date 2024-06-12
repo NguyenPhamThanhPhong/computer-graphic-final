@@ -1,47 +1,13 @@
 import * as THREE from 'three';
 import { createCamera, createControls } from './camera.js';
 import { createRaycaster } from './raycaster.js';
-import { createAxis } from './helper-objects/axis.js';
 import { createPlane } from './game-objects/plane-ground.js';
 import { createCity } from './city.js'
 import { createLights } from './lights.js'
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 import textures from './textures.js';
 
 const CLEAR_COLOR = 'white'
-
-// let mymodel = loadModelAsync(url).then((model) => {
-//     return model;
-// });
-
-// let mymodel = await loadModelAsync(url);
-// console.log(mymodel);
-// let anothermodel = mymodel.clone();
-// console.log(anothermodel);
-// mymodel.position.set(15, 2, 15);
-// anothermodel.position.set(5, 2, 5);
-
-function createCube(w = 1, h = 1, d = 1) {
-    const geometry = new THREE.BoxGeometry(w, h, d);
-    const material = new THREE.MeshPhongMaterial({ color: 'aqua' });
-    const cube = new THREE.Mesh(geometry, material);
-    cube.castShadow = true;
-    cube.position.set(0, 5, 0);
-    // cube.position.y = cube.geometry.parameters.height / 2;
-    return cube;
-}
-
-function createShadowReceiveCube(w = 1, h = 1, d = 1) {
-    const geometry = new THREE.BoxGeometry(w, h, d);
-    const material = new THREE.MeshPhongMaterial({ color: 'aqua' });
-    const cube = new THREE.Mesh(geometry, material);
-    cube.castShadow = true;
-    cube.receiveShadow = true;
-    cube.position.set(0, 4, 0);
-    // cube.position.y = cube.geometry.parameters.height / 2;
-
-    return cube;
-}
 
 
 export function createScene() {
@@ -51,7 +17,6 @@ export function createScene() {
 
 
     const renderer = new THREE.WebGLRenderer()
-    // renderer.setClearColor(CLEAR_COLOR);
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.setSize(gameWindow.clientWidth, gameWindow.clientHeight)
@@ -59,60 +24,19 @@ export function createScene() {
     gameWindow.appendChild(renderer.domElement)
 
 
-    createAxis(scene);
     createPlane(scene);
-    const cube1 = createCube();
-    const box1 = new THREE.Box3();
-    box1.setFromObject(cube1);
-    const cube2 = createShadowReceiveCube()
-    const box2 = new THREE.Box3();
-    box2.setFromObject(cube2);
-    scene.add(cube1);
-    scene.add(cube2);
-    if (box1.intersectsBox(box2)) {
-        cube1.material.color.set('red');
-    }
 
 
     let mixer;
-    // const loader = new GLTFLoader();
-    // loader.load('../public/models/school/scene.gltf', function (gltf) {
-    //     const model = gltf.scene
-    //     model.scale.set(0.2, 0.2, 0.2)
-    //     model.position.set(5, 2, 5)
-    //     console.log(model)
+
+    const loader = new RGBELoader();
+    let url = '../public/assets/textures/blue-sky.hdr';
+    loader.load(url, function (texture) {
+        scene.background = texture;
+    });
 
 
-    //     // mixer = new THREE.AnimationMixer(model);
-    //     // mixer.name = model.uuid;
-    //     // const clips = gltf.animations;
-    //     // const chosenClip = clips[0];
-    //     // const action = mixer.clipAction(chosenClip);
-    //     // // action.play();
-
-    //     // model.animate = () => {
-    //     //     action.play();
-    //     // }
-    //     // console.log(typeof (model.animate));
-    //     // console.log(model.animate)
-    //     // console.log(model)
-    //     // console.log(mixer);
-
-    //     model.traverse(function (node) {
-    //         if (node.isMesh) {
-    //             node.castShadow = true;
-    //         }
-    //     });
-    //     scene.add(model)
-    // }, undefined, function (error) {
-    //     console.error(error)
-    // })
-
-
-    // scene.add(mymodel);
-    // scene.add(anothermodel);
-
-    let city = createCity(30)
+    let city = createCity(90)
     city.initializeCity(scene)
 
     const { updateSunPosition } = createLights(scene);
