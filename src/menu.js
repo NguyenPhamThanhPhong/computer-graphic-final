@@ -1,4 +1,8 @@
+import { createAssetInstance } from "./assets.js";
+import { model_dict } from "./textures-selection.js";
+import * as THREE from 'three';
 
+const GLOBAL_SELECTED_OBJ_NAME = 'GLOBAL_SELECTED_OBJECT';
 
 function menuItemMouseDown(button) {
     button.style.backgroundColor = "#FF0000";
@@ -34,9 +38,6 @@ const areaPointsCalculator = {
 
 class Menu {
     constructor() {
-        // this.items = ['cursor','bulldoze', 'residential', 'commercial',
-        //  'industrial', 'road','office','park',
-        //  'school','hospital','super market'];
         this.selectedItem = 'cursor'
     }
 
@@ -69,6 +70,43 @@ class Menu {
 
         // make this function a method of the class
         const handleMenuItem = (event, toolId) => {
+
+            if (window.raycaster.selectedBuildingInstance) {
+
+                if (window?.scene?.scene) {
+                    let scene = window.scene.scene;
+                    let global_selected_object = scene.getObjectByName(GLOBAL_SELECTED_OBJ_NAME)
+                    if (global_selected_object) {
+                        scene.remove(global_selected_object);
+                        window.raycaster.selectedBuildingInstance = undefined;
+                    }
+                }
+            }
+            if (toolId !== 'cursor' && toolId !== 'bulldoze') {
+                let selectedRenderObj = model_dict[toolId];
+                if (selectedRenderObj) {
+                    selectedRenderObj.name = GLOBAL_SELECTED_OBJ_NAME;
+                    if (toolId == 'residential' || toolId==='road') {
+                        selectedRenderObj.material.transparent = true;
+                        selectedRenderObj.material.opacity = 0.5;
+                    }
+                    else {
+                        selectedRenderObj.traverse((child) => {
+                            if (child.isMesh) {
+                                // child.material.emissive.setHex(0xff0000);
+                                // console.log(child);
+                                child.material.transparent = true;
+                                child.material.opacity = 0.6;
+                            }
+                        });
+                    }
+                    // console.log(selectedRenderObj);
+                    window.raycaster.selectedBuildingInstance = selectedRenderObj;
+                    // console.log(window.scene.scene);
+                    window.scene.scene.add(selectedRenderObj);
+                }
+            }
+
             if (selectedControl) {
                 selectedControl.classList.remove('selected');
             }

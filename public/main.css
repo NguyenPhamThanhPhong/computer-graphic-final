@@ -17,25 +17,31 @@ html, body{
     width: 150px;
     height: 100vh;
     padding: 16px;
-    background-color: #00000033;
+    background-color: #aea3a333;
+}
+#title-div{
+    color: lightgray;
+    height: 40px;
+    font-size: 16px;
 }
 
 .ui-button{
     cursor: pointer;
-    background-color: #00000055;
+    background-color: #8e8e8e55;
     border: 1px solid black;
     color: lightgray;
     height: 40px;
     width: 100%;
     font-size: 16px;
+    border-radius: 20px;
     margin: 4px 0;
 }
 .ui-button:hover{
-    opacity: 0.8;
+    opacity: 0.5;
 }
 
 .ui-button.selected{
-    background-color: #55558855;
+    background-color: #c1c1d655;
 }
 
 .ui-button:not(.selected){

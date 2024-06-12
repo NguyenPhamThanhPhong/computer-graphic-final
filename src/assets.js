@@ -15,7 +15,7 @@ let buildingTypes = {
     state_3: 'residential',
     state_no_update: 'building-4',
     residential: 'residential',
-    comercial: 'comercial',
+    commercial: 'commercial',
     industrial: 'industrial',
     hospital: 'hospital',
     school: 'school',
@@ -58,8 +58,8 @@ let buildingStates = {
         buildingId: 'residential',
         terrainId: 'grass',
     },
-    [buildingTypes.comercial]: {
-        buildingId: 'comercial',
+    [buildingTypes.commercial]: {
+        buildingId: 'commercial',
         terrainId: 'grass',
     },
     [buildingTypes.industrial]: {
@@ -118,8 +118,7 @@ function createMeshTexture(x, y, data) {
     const geometry = new THREE.BoxGeometry(1, data.height, 1)
     let mesh = new THREE.Mesh(geometry, materialArray)
     mesh.userData = data.userData;
-    mesh.scale.set(0.8, (data.height - 0.95) / 2, 0.8)
-    mesh.position.set(x, (data.height - 0.95) / 2, y);
+    mesh.position.set(x, data.height / 2, y);
     mesh.receiveShadow = true;
     mesh.castShadow = true;
     return mesh;
@@ -136,32 +135,32 @@ function createDataObject(textureData, height, userData) {
 const ModelLoader = new GLTFLoader()
 
 const assets = {
-    'building-0': (x, y) => {
-        const height = 0.5
-        const my_data = createDataObject(textures.building0, 1, buildingStates[buildingTypes.state_0])
-        const cube = createMeshTexture(x, y, my_data)
+    // 'building-0': (x, y) => {
+    //     const height = 0.5
+    //     const my_data = createDataObject(textures.building0, 1, buildingStates[buildingTypes.state_0])
+    //     const cube = createMeshTexture(x, y, my_data)
 
-        cube.position.set(x, height / 2, y)
-        return cube
-    },
-    'building-1': (x, y) => {
-        const height = 1
-        const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_1])
-        const cube = createMeshTexture(x, y, my_data)
-        return cube
-    },
-    'building-2': (x, y) => {
-        const height = 2
-        const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_2])
-        const cube = createMeshTexture(x, y, my_data)
-        return cube
-    },
-    'building-3': (x, y) => {
-        const height = 2.5
-        const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_3])
-        const cube = createMeshTexture(x, y, my_data)
-        return cube
-    },
+    //     cube.position.set(x, height / 2, y)
+    //     return cube
+    // },
+    // 'building-1': (x, y) => {
+    //     const height = 1
+    //     const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_1])
+    //     const cube = createMeshTexture(x, y, my_data)
+    //     return cube
+    // },
+    // 'building-2': (x, y) => {
+    //     const height = 2
+    //     const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_2])
+    //     const cube = createMeshTexture(x, y, my_data)
+    //     return cube
+    // },
+    // 'building-3': (x, y) => {
+    //     const height = 2.5
+    //     const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_3])
+    //     const cube = createMeshTexture(x, y, my_data)
+    //     return cube
+    // },
     'residential': (x, y) => {
         const height = 2.5
         const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.residential])
@@ -171,8 +170,8 @@ const assets = {
     'commercial': (x, y) => {
         const model = textures.comercial_model.clone()
         model.scale.set(0.001, 0.001, 0.001)
-        model.position.set(x, 2, y)
-        model.userData = buildingStates[buildingTypes.comercial]
+        model.position.set(x, 1, y)
+        model.userData = buildingStates[buildingTypes.commercial]
         return model
     },
     'hospital': (x, y) => {
@@ -199,7 +198,7 @@ const assets = {
     'park': (x, y) => {
         const model = textures.park_model.clone()
         model.scale.set(1, 1, 1)
-        model.position.set(x, 0, y)
+        model.position.set(x, 0.3, y)
         model.userData = buildingStates[buildingTypes.park]
         return model
     },
@@ -213,7 +212,6 @@ const assets = {
     'industrial': (x, y) => {
         const industrial_model = textures.industrial_model
         const model = SkeletonUtils.clone(industrial_model)
-        model.scale.set(0.01, 0.01, 0.01)
         model.position.set(x, 0, y)
         model.animations = [...industrial_model.animations]
 
@@ -250,8 +248,16 @@ const assets = {
         //0eeb49
         const height = 0.04
         const geometry = new THREE.BoxGeometry(1, height, 1)
-        const material = new THREE.MeshLambertMaterial({ color: 0x000000 })
-        const cube = new THREE.Mesh(geometry, material)
+        const topMaterial = new THREE.MeshLambertMaterial({ map: loadTexture(textures.road) })
+        const sideMaterial = new THREE.MeshLambertMaterial({ color: 0x555555 })
+        const materialArray = [
+            sideMaterial,
+            sideMaterial,
+            topMaterial,
+            topMaterial,
+            sideMaterial,
+            sideMaterial,]
+        const cube = new THREE.Mesh(geometry, materialArray)
         const userData = buildingStates[buildingTypes.road]
         cube.userData = userData
         cube.position.set(x, height / 2, y)
@@ -270,12 +276,19 @@ const assets = {
 }
 
 function createAssetInstance(assetId, x, y) {
-    console.log(`createAssetInstance:${assetId}`)
     if (!assets[assetId]) {
         console.warn(`No asset with id ${assetId}`)
         return undefined
     }
-    return assets[assetId](x, y)
+    let assetItem = assets[assetId](x, y)
+    if(assetId !== buildingTypes.residential){
+        assetItem.traverse((child) => {
+            if (child.isMesh) {
+                child.root = assetItem;
+            }
+        });
+    }
+    return assetItem
 }
 
 export { createAssetInstance, buildingTypes }

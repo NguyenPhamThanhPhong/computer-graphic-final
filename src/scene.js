@@ -117,6 +117,7 @@ export function createScene() {
 
     const { updateSunPosition } = createLights(scene);
     const raycaster = createRaycaster(scene, camera)
+    window.raycaster = raycaster
 
     const controls = createControls(camera, renderer);
     //add mouse down to scene
@@ -127,15 +128,31 @@ export function createScene() {
         mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
         raycaster.onMouseDownSelect()
     })
-    // renderer.domElement.addEventListener('mousemove', (event) => {
-    //     var rect = renderer.domElement.getBoundingClientRect();
-    //     let mouse = raycaster.mouse
-    //     mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-    //     mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-    // });
+    renderer.domElement.addEventListener('mousemove', (event) => {
+        var rect = renderer.domElement.getBoundingClientRect();
+        let mouse = raycaster.mouse
+        mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+        mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+        raycaster.onMouseMove()
+    });
 
     const clock = new THREE.Clock();
-    // let temp = {}
+
+    // const box = new THREE.Box3();
+    // const loader = new GLTFLoader();
+    // loader.load('../public/models/commercial/scene.gltf', function (gltf) {
+    //     const model = gltf.scene
+    //     model.scale.set(0.001, 0.001, 0.001)
+    //     box.setFromObject(model);
+    //     const helper = new THREE.Box3Helper(box, 0xffff00);
+    //     scene.add(helper);
+    //     scene.add(model);
+    //     // model.position.set(5, 2, 5)
+
+    // });
+    // box.setFromCenterAndSize(new THREE.Vector3(1, 1, 1), new THREE.Vector3(2, 1, 3));
+
+
 
     function draw() {
         renderer.render(scene, camera)
@@ -146,11 +163,45 @@ export function createScene() {
         if (mixer)
             mixer.update(deltaTime);
 
-        // console.log(textures.mixers)
         Object.values(textures.mixers).forEach((value) => {
             if(value)
                 value.update(deltaTime);
         });
+        let selectedRenderObj = window.raycaster?.selectedBuildingInstance;
+        if (selectedRenderObj){
+            let instanceBox = new THREE.Box3().setFromObject(selectedRenderObj)
+            let isOverlapped = city.detectOverlap(instanceBox);
+            selectedRenderObj.isOverlapped = isOverlapped;
+            if(isOverlapped===true){
+                if (window.menu?.selectedItem === 'residential' || window.menu?.selectedItem === 'road') {
+                    selectedRenderObj.material.forEach(element => {
+                        element.emissive.setHex(0x000000);
+                    });
+                }
+                else {
+                    selectedRenderObj.traverse((child) => {
+                        if (child.isMesh) {
+                            child.material.emissive.setHex(0xff0000);
+                        }
+                    });
+                }
+            }
+            else{
+                if(window?.menu?.selectedItem === 'residential' || window?.menu?.selectedItem === 'road'){
+                    selectedRenderObj.material.forEach(element => {
+                        element.emissive.setHex(0x000000);
+                    });
+                }
+                else
+                {
+                    selectedRenderObj.traverse((child) => {
+                        if (child.isMesh) {
+                            child.material.emissive.setHex(0x000000);
+                        }
+                    });
+                }
+            }
+        }
     }
 
     function start() {
@@ -170,6 +221,7 @@ export function createScene() {
 
     return {
         city,
+        scene,
         intervalUpdate,
         draw,
         start,

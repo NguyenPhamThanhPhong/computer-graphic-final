@@ -8,6 +8,7 @@ const building1 = '../public/assets//textures/building1.png'
 const sun = '../public/assets/textures/sun.png'
 const comercial3 = '../public/assets/textures/comercial3.png'
 const comercial1 = '../public/assets/textures/comercial1.png'
+const road = '../public/assets/textures/road.jpg'
 
 const loader = new GLTFLoader();
 
@@ -22,7 +23,7 @@ const operaUrl = '../public/models/opera-theater/scene.gltf'
 const hospital = '../public/models/hospital/scene.gltf'
 const park = '../public/models/park/scene.gltf'
 const school = '../public/models/school/scene.gltf'
-const industrialUrl = '../public/models/industrial/scene.gltf'
+const industrialUrl = '../public/models/jack-pump/scene.gltf'
 
 async function loadModelAsync(url) {
     try {
@@ -50,6 +51,7 @@ const textures ={
     building0: building0,
     building1: building1,
     sun: sun,
+    road: road,
     comercial3: comercial3,
     comercial1: comercial1,
     // residential_model: undefined,
@@ -79,7 +81,6 @@ loadModelAsync(comercialUrl).then((model) => {
 loadModelAsync(smallOfficeUrl).then((model) => {
     textures.small_office_model = model;
     console.log('small_office_model loaded');
-    console.log(model)
 });
 loadModelAsync(superMarketUrl).then((model) => {
     textures.super_market_model = model;
@@ -107,8 +108,6 @@ loadModelAsync(school).then((model) => {
 });
 loadModelAsync(industrialUrl).then((model) => {
     textures.industrial_model = model;
-    console.log(model)
-    // console.log(model);
     console.log('industrial_model loaded');
 });
 
