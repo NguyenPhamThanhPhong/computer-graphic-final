@@ -37,6 +37,42 @@ class BuildingObject {
     }
 }
 
+const house_count_element = document.getElementById('house-count');
+
+// Get the modal
+var modal = document.getElementById('victoryModal');
+
+var span = document.getElementsByClassName('close')[0];
+
+// Get the OK button
+var okButton = document.getElementById('okButton');
+
+function showModal() {
+    modal.style.display = 'block';
+}
+
+// Function to close the modal
+function closeModal() {
+    modal.style.display = 'none';
+}
+span.onclick = closeModal;
+
+// When the user clicks on the OK button, close the modal
+okButton.onclick = closeModal;
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        closeModal();
+    }
+};
+// Disable background interactions
+document.addEventListener('click', function (event) {
+    if (modal.style.display === 'block' && !modal.contains(event.target)) {
+        event.stopPropagation();
+    }
+}, true);
+
 function createCity(size) {
     const data = []
     let buildingCubes = []
@@ -85,6 +121,7 @@ function createCity(size) {
                 if (tile.isRemoved) {
 
                     if (buildingCubes[x][y]) {
+                        house_count_element.innerHTML = parseInt(house_count_element.innerHTML) - 1;
                         scene.remove(buildingCubes[x][y].boundingBox)
                         scene.remove(buildingCubes[x][y])
                         buildingCubes[x][y] = undefined
@@ -113,6 +150,10 @@ function createCity(size) {
                     cube.boundingBox = new THREE.Box3().setFromObject(cube)
                     // const helper = new THREE.Box3Helper(cube.boundingBox, 0xffff00);
                     // scene.add(helper);
+                    house_count_element.innerHTML = parseInt(house_count_element.innerHTML) + 1;
+                    if (parseInt(house_count_element.innerHTML)>30){
+                        showModal();
+                    }
                     scene.add(cube)
 
                     buildingCubes[x][y] = cube

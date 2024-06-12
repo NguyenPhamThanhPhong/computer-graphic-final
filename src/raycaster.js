@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { buildingTypes, createAssetInstance } from './assets.js';
 
+let info_table = document.getElementById('info-overlay-details');
+
 function createRaycaster(scene, camera) {
     const raycaster = new THREE.Raycaster();
     const mouse = new THREE.Vector2();
@@ -22,10 +24,16 @@ function createRaycaster(scene, camera) {
             if (selectedObject) {
                 selectedObject.object.material.emissive?.setHex(0);
             }
-            if (window.menu.selectedItem === buildingTypes.bulldoze
-                && hoveredInstance !== undefined
-            ) {
-                window.scene.city.removeBuilding(hoveredInstance.position.x, hoveredInstance.position.z)
+            if (hoveredInstance !== undefined) {
+                if (window.menu.selectedItem === buildingTypes.bulldoze) {
+                    window.scene.city.removeBuilding(hoveredInstance.position.x, hoveredInstance.position.z)
+                }
+                else{
+                    let htmlStr = `Building name: ${hoveredInstance.userData.buildingId}`
+                    htmlStr += `<br>Position: (${hoveredInstance.position.x}, ${hoveredInstance.position.z})`
+                    htmlStr += `<br>Description: ${hoveredInstance.userData.description}`
+                    info_table.innerHTML = htmlStr
+                }
             }
             selectedObject = intersects.find((intersect) => intersect.object.userData.buildingId)
 
@@ -65,7 +73,8 @@ function createRaycaster(scene, camera) {
             var intersects = raycaster.intersectObjects(scene.children);
 
             if (intersects.length > 0) {
-                if (window.menu.selectedItem === buildingTypes.bulldoze) {
+                if (window.menu.selectedItem === buildingTypes.bulldoze || 
+                    window.menu.selectedItem === 'cursor') {
                     let buildingId = hoveredInstance?.userData?.buildingId
                     if (hoveredInstance) {
                         if (buildingId === buildingTypes.road

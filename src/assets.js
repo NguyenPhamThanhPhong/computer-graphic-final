@@ -57,42 +57,52 @@ let buildingStates = {
     [buildingTypes.residential]: {
         buildingId: 'residential',
         terrainId: 'grass',
+        description: 'residential building 😄😄😄',
     },
     [buildingTypes.commercial]: {
         buildingId: 'commercial',
         terrainId: 'grass',
+        description: 'commercial building 💻💻💻',
     },
     [buildingTypes.industrial]: {
         buildingId: 'industrial',
         terrainId: 'grass',
+        description: 'industrial building our target is to build a factory 🏭🏭🏭',
     },
     [buildingTypes.hospital]: {
         buildingId: 'hospital',
+        description: 'hospital building 🚑🚑🚑: ready to goo!!',
     },
     [buildingTypes.school]: {
         buildingId: 'school',
+        description: "we love children, can't happier to educate them 🏫🏫🏫"
     },
     [buildingTypes.park]: {
         buildingId: 'park',
+        description: "we're park, need some green? 🌳🌳🌳"
     },
     [buildingTypes.office]: {
         buildingId: 'office',
+        description: "office building, let's work 🏢🏢🏢"
     },
     [buildingTypes.super_market]: {
         buildingId: 'super-market',
+        description: "super market, let's shop 🛒🛒🛒"
     },
     [buildingTypes.road]: {
         buildingId: 'road',
         terrainId: 'grass',
+        description: "road, let's go 🚗🚗🚗"
     },
     [buildingTypes.gas_station]: {
         buildingId: 'gas-station',
         terrainId: 'grass',
-        isUpdateable: false,
+        description: "gas station, let's fuel up 🚗🚗🚗"
     },
     [buildingTypes.windmill]: {
         buildingId: 'windmill',
         terrainId: 'grass',
+        description: "windmill, let's generate power 🌬️🌬️🌬️"
     }
 }
 
@@ -135,32 +145,6 @@ function createDataObject(textureData, height, userData) {
 const ModelLoader = new GLTFLoader()
 
 const assets = {
-    // 'building-0': (x, y) => {
-    //     const height = 0.5
-    //     const my_data = createDataObject(textures.building0, 1, buildingStates[buildingTypes.state_0])
-    //     const cube = createMeshTexture(x, y, my_data)
-
-    //     cube.position.set(x, height / 2, y)
-    //     return cube
-    // },
-    // 'building-1': (x, y) => {
-    //     const height = 1
-    //     const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_1])
-    //     const cube = createMeshTexture(x, y, my_data)
-    //     return cube
-    // },
-    // 'building-2': (x, y) => {
-    //     const height = 2
-    //     const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_2])
-    //     const cube = createMeshTexture(x, y, my_data)
-    //     return cube
-    // },
-    // 'building-3': (x, y) => {
-    //     const height = 2.5
-    //     const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.state_3])
-    //     const cube = createMeshTexture(x, y, my_data)
-    //     return cube
-    // },
     'residential': (x, y) => {
         const height = 2.5
         const my_data = createDataObject(textures.comercial1, height, buildingStates[buildingTypes.residential])
