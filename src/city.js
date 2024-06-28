@@ -151,7 +151,7 @@ function createCity(size) {
                     // const helper = new THREE.Box3Helper(cube.boundingBox, 0xffff00);
                     // scene.add(helper);
                     house_count_element.innerHTML = parseInt(house_count_element.innerHTML) + 1;
-                    if (parseInt(house_count_element.innerHTML)>30){
+                    if (parseInt(house_count_element.innerHTML)>10){
                         showModal();
                     }
                     scene.add(cube)
